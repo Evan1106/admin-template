@@ -1,32 +1,29 @@
 <template>
   <div id="app">
-    <nav>
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </nav>
-    <router-view/>
+    <router-view />
+    <!-- <footer>I am footer</footer> -->
   </div>
 </template>
 
-<style>
+<style lang="scss">
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
+  // text-align: center;
+  // background-color: #2c3e50;
 }
 
-nav {
-  padding: 30px;
-}
-
-nav a {
+footer {
   font-weight: bold;
-  color: #2c3e50;
-}
-
-nav a.router-link-exact-active {
-  color: #42b983;
+  box-shadow: 0px -2px 4px 0 rgba(0, 0, 0, 0.2);
+  padding: 30px;
+  line-height: 20px;
+  font-size: 12px;
 }
 </style>
