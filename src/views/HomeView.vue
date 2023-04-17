@@ -1,7 +1,7 @@
 <template>
   <div class="layout">
     <header>
-      <img src="../assets/logo.png" height="100%">
+      <img src="../assets/infibi-logo.svg" height="100%">
       <div class="user" v-on:click="() => {}">
         <img src="../assets/logo.png" height="100%">
       </div>
@@ -38,7 +38,7 @@
               <el-menu-item index="1-4-1">选项1</el-menu-item>
               </el-submenu>
           </el-submenu>
-          <el-menu-item index="3" @click="() => { this.$router.push('/HomeView/second'); }">
+          <el-menu-item index="3" v-on:click="presentForm">
               <i class="el-icon-setting"></i>
               <span slot="title">表格</span>
           </el-menu-item>
@@ -61,7 +61,7 @@ export default {
   },  
   data() {
     return {
-      
+
     }
   },
   methods: {
@@ -70,6 +70,9 @@ export default {
     },
     handleClose(key, keyPath) {
       console.log(key, keyPath);
+    },
+    presentForm() {
+      this.$router.push('/HomeView/second');
     },
   },
 };

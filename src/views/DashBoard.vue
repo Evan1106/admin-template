@@ -20,8 +20,8 @@ p {
   font-size: 50px;
   font-weight: 600;
   text-align: center;
-  width: 60%;
+  width: 100%;
   box-shadow: 7px 0px 20px 0px grey;
-  color: white;
+  color: black;
 }
 </style>
