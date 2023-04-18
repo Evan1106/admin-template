@@ -7,12 +7,12 @@ const routes = [
   {
     path: "/",
     name: "LoginView",
-    component: () => import("@/views/LoginView.vue")
+    component: () => import("@/views/LoginView")
   },
   {
     path: "/HomeView",
     name: "HomeView",
-    component: () => import("@/views/HomeView.vue"),
+    component: () => import("@/views/HomeView"),
     redirect: "/HomeView/DashBoard",
     children: [
       {
@@ -24,6 +24,11 @@ const routes = [
         path: "/HomeView/second",
         name: "Second",
         component: () => import("@/views/PageB_Second")
+      },
+      {
+        path: "/HomeView/permission",
+        name: "PermissionView",
+        component: () => import('@/views/PermissionView')
       }
     ]
   }

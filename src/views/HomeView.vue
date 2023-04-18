@@ -20,7 +20,7 @@
               <i class="el-icon-menu"></i>
               <span slot="title">首頁</span>
           </el-menu-item>
-          <el-submenu index="2">
+          <!-- <el-submenu index="2">
               <template slot="title">
               <i class="el-icon-location"></i>
               <span>导航一</span>
@@ -37,10 +37,14 @@
               <template slot="title">选项4</template>
               <el-menu-item index="1-4-1">选项1</el-menu-item>
               </el-submenu>
-          </el-submenu>
+          </el-submenu> -->
           <el-menu-item index="3" v-on:click="presentForm">
               <i class="el-icon-setting"></i>
               <span slot="title">表格</span>
+          </el-menu-item>
+          <el-menu-item index="4" v-on:click="presentPermission">
+              <i class="el-icon-setting"></i>
+              <span slot="title">權限</span>
           </el-menu-item>
           </el-menu>
       </div>
@@ -73,6 +77,9 @@ export default {
     },
     presentForm() {
       this.$router.push('/HomeView/second');
+    },
+    presentPermission() {
+      this.$router.push('/HomeView/permission');
     },
   },
 };
