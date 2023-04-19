@@ -46,6 +46,10 @@
               <i class="el-icon-setting"></i>
               <span slot="title">權限</span>
           </el-menu-item>
+          <el-menu-item index="5" v-on:click="presentLogin">
+              <i class="el-icon-user"></i>
+              <span slot="title">登出</span>
+          </el-menu-item>
           </el-menu>
       </div>
       <router-view />
@@ -54,6 +58,7 @@
 </template>
 
 <script>
+import axios from 'axios';
 
 export default {
   name: "HomeView",
@@ -81,6 +86,14 @@ export default {
     presentPermission() {
       this.$router.push('/HomeView/permission');
     },
+    async presentLogin() {
+      axios.post('/logout').then(res => {
+        console.log(res)
+        this.$store.commit("resetState");
+        this.$router.replace('/');
+      })
+      
+    }
   },
 };
 </script>

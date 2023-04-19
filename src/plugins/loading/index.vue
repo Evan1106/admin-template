@@ -21,7 +21,6 @@ export default {
         showLoading(msg){
             this.message = msg
             this.isShow = true
-            console.log(this.message)
         },
         hideLoading() {
             this.isShow = false

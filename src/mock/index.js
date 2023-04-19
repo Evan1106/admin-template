@@ -65,3 +65,28 @@ Mock.mock(/\/api\/getgoods/, 'get', function(option) {
     message: '获取商品成功！'
   })
 })
+
+// 登录，此地址与login登录地址对应
+Mock.mock('/login','post', (param)=>{  
+  let state=0;
+  let body = JSON.parse(param.body);
+  console.log(param)
+  let data;
+  //模拟用户名和密码都是 admin
+  if(body.username=='admin'&&body.password=='admin'){
+      state=1;
+      data = Mock.mock({
+          "token": "@guid()",//模拟token
+          "name": "@cname",//随机生成中文名字
+      });
+  }
+  return{
+      "state":state,
+      "vData":data
+  }
+});
+
+//退出
+Mock.mock('/logout','post', ()=>{
+  return {state:1}
+});

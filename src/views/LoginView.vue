@@ -27,11 +27,11 @@
           <el-input
             ref="password"
             v-model="loginForm.password"
+            type="password"
             placeholder="Password"
             name="password"
             tabindex="2"
             autocomplete="on"
-            @keyup.native="checkCapslock"
             @blur="capsTooltip = false"
             @keyup.enter.native="handleLogin"
           />
@@ -40,7 +40,7 @@
         </el-form-item>
       </el-tooltip>
 
-      <el-button type="primary" style="width:100%;margin-bottom:30px;" @click.native.prevent="handleLogin">Login</el-button>
+      <el-button type="primary" style="width:100%;margin-bottom:30px;" @click.native.prevent="confirm">Login</el-button>
 
       <div style="position:relative">
         <!-- <div class="tips">
@@ -57,12 +57,16 @@
 </template>
 
 <script>
+import axios from 'axios';
 
 export default {
   name: 'LoginView',
   data() {
     return {
-      loginForm:{}
+      loginForm:{
+        username: 'admin',
+        password: 'admin'
+      }
       
     }
   },
@@ -82,6 +86,29 @@ export default {
     handleLogin() {
       this.$router.push('HomeView')
     },
+    async confirm(){
+      this.$refs.loginForm.validate((valid) => {
+        if (valid) { //valid成功为true，失败为false
+            //去后台验证用户名密码，并返回token
+            axios.post('/login',this.loginForm).then(res=>{
+                console.log(res.data)
+                console.log(res.headers)
+                if(res.data.state==1){
+                    //存储token到本地
+                    this.$store.commit("SET_TOKEN",res.data.vData.token);
+                    //跳转到主页
+                    this.$router.replace('/HomeView');
+                }else{
+                    alert('用户名或密码错误！');
+                    return false;
+                }
+            });
+        } else {
+            console.log('校验失败');
+            return false;
+        }
+      });
+    }
   }
 }
 </script>
