@@ -29,7 +29,12 @@ const routes = [
         path: "/HomeView/permission",
         name: "PermissionView",
         component: () => import('@/views/PermissionView')
-      }
+      },
+      {
+        path: "/HomeView/gridview",
+        name: "Gridview",
+        component: () => import('@/views/GridView')
+      },
     ]
   }
 ];
