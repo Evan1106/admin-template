@@ -1,5 +1,6 @@
 <template>
-  <el-table
+  <div class="table">
+    <el-table
     class="customer-table"
     :data="tableData">
     <el-table-column type="expand">
@@ -65,6 +66,7 @@
       </template>
     </el-table-column>
   </el-table>
+  </div>
 </template>
 
 <style>
@@ -83,8 +85,12 @@
   .customer-table {
     /* color: white; */
     /* max-width: calc( 100% - 350px ); */
-    border: 1px solid black;
+    border: 1px solid;
     height: 100%;
+    width: 100%;
+  }
+  .table {
+    width: 100%;
   }
 </style>
 
@@ -105,7 +111,7 @@
         setTimeout(() => {
           this.$loadingself.hide()
           this.getGoodList();
-        }, 3000)
+        }, 1000)
       
     },
     methods: {

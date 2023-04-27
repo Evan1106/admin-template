@@ -67,6 +67,7 @@
 .gridview {
   display: flex;
   flex-wrap: wrap;
+  width: 100%;
 }
 .cards {
   margin: 20px;

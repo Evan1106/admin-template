@@ -2,7 +2,7 @@
   <div class="layout">
     <header>
       <img src="../assets/infibi_logo.png" height="100%">
-      <div class="user" v-on:click="() => {}">
+      <div class="user">
         <!-- <img src="../assets/logo.png" height="100%"> -->
           <el-dropdown trigger="click">
             <el-avatar icon="el-icon-user-solid"></el-avatar>
@@ -10,7 +10,7 @@
               <el-dropdown-item>Profile</el-dropdown-item>
               <el-dropdown-item>Dashboard</el-dropdown-item>
               <el-dropdown-item>Empty</el-dropdown-item>
-              <el-dropdown-item divided>Log Out</el-dropdown-item>
+              <el-dropdown-item divided @click.native="presentLogout">Log Out</el-dropdown-item>
             </el-dropdown-menu>
           </el-dropdown>
       </div>
@@ -29,7 +29,7 @@
               <i class="el-icon-menu"></i>
               <span slot="title">首頁</span>
           </el-menu-item>
-          <!-- <el-submenu index="2">
+          <el-submenu index="2">
               <template slot="title">
               <i class="el-icon-location"></i>
               <span>导航一</span>
@@ -46,7 +46,7 @@
               <template slot="title">选项4</template>
               <el-menu-item index="1-4-1">选项1</el-menu-item>
               </el-submenu>
-          </el-submenu> -->
+          </el-submenu>
           <el-menu-item index="3" v-on:click="presentForm">
               <i class="el-icon-setting"></i>
               <span slot="title">表格</span>
@@ -59,7 +59,7 @@
               <i class="el-icon-setting"></i>
               <span slot="title">卡片</span>
           </el-menu-item>
-          <el-menu-item index="6" v-on:click="presentLogin">
+          <el-menu-item index="6">
               <i class="el-icon-user"></i>
               <span slot="title">登出</span>
           </el-menu-item>
@@ -102,7 +102,7 @@ export default {
     presentGridView() {
       this.$router.push('/HomeView/gridview')
     },  
-    async presentLogin() {
+    async presentLogout() {
       axios.post('/logout').then(res => {
         console.log(res)
         this.$store.commit("resetState");

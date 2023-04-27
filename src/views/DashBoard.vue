@@ -12,9 +12,11 @@ export default {
 
 <style lang="scss" scoped>
 div {
-  width: 80%;
+  width: 100%;
   display: flex;
   justify-content: center;
+  overflow-x:scroll;
+  border: 1px solid ;
 }
 p {
   font-size: 50px;

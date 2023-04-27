@@ -91,8 +91,8 @@ export default {
         if (valid) { //valid成功为true，失败为false
             //去后台验证用户名密码，并返回token
             axios.post('/login',this.loginForm).then(res=>{
-                console.log(res.data)
-                console.log(res.headers)
+                // console.log(res.data)
+                // console.log(res.headers)
                 if(res.data.state==1){
                     //存储token到本地
                     this.$store.commit("SET_TOKEN",res.data.vData.token);

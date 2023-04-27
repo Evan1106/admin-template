@@ -5,65 +5,64 @@
     <el-button class="btn" type="primary">New Role</el-button>
     <br><br>
     <el-table
-    :data="tableData"
-    border
-    style="width: 90%; margin-left: 50px;">
-    <el-table-column
-      align="center"
-      prop="role"
-      label="Role key"
-      width="180">
-    </el-table-column>
-    <el-table-column
-      align="center"
-      prop="name"
-      label="姓名"
-      width="180">
-    </el-table-column>
-    <el-table-column
-      align="header-center"
-      prop="address"
-      label="備註">
-    </el-table-column>
-    <el-table-column
-      align="center"
-      label="operations">
-      <template slot-scope="scope">
-          <el-button type="primary" size="small" @click="handleEdit(scope)">Edit</el-button>
-          <el-button type="danger" size="small" @click="handleDelete(scope)">Delete</el-button>
-        </template>
-    </el-table-column>
-  </el-table>
+      :data="tableData"
+      border
+      style="width: 90%; margin-left: 50px;">
+      <el-table-column
+        align="center"
+        prop="role"
+        label="Role key"
+        width="180">
+      </el-table-column>
+      <el-table-column
+        align="center"
+        prop="name"
+        label="姓名"
+        width="180">
+      </el-table-column>
+      <el-table-column
+        align="header-center"
+        prop="description"
+        label="description">
+      </el-table-column>
+      <el-table-column
+        align="center"
+        label="operations">
+        <template slot-scope="scope">
+            <el-button type="primary" size="small" @click="handleEdit(scope)">Edit</el-button>
+            <el-button type="danger" size="small" @click="handleDelete(scope)">Delete</el-button>
+          </template>
+      </el-table-column>
+    </el-table>
 
-  <el-dialog :visible.sync="dialogVisible" :title="dialogType==='edit'?'Edit Role':'New Role'">
-      <el-form :model="role" label-width="80px" label-position="left">
-        <el-form-item label="Name">
-          <el-input v-model="role.name" placeholder="Role Name" />
-        </el-form-item>
-        <el-form-item label="Desc">
-          <el-input
-            v-model="role.description"
-            :autosize="{ minRows: 2, maxRows: 4}"
-            type="textarea"
-            placeholder="Role Description"
-          />
-        </el-form-item>
-        <el-form-item label="Menus">
-          <el-tree
-            :data="testData"
-            show-checkbox
-            :props="defaultProps"
-            @node-click="handleNodeClick"
-          />
-        </el-form-item>
-      </el-form>
-      <div style="text-align:right;">
-        <el-button type="danger" @click="dialogVisible=false">Cancel</el-button>
-        <el-button type="primary" @click="confirmRole">Confirm</el-button>
-      </div>
-    </el-dialog>
+    <el-dialog :visible.sync="dialogVisible" :title="dialogType==='edit'?'Edit Role':'New Role'">
+        <el-form :model="role" label-width="80px" label-position="left">
+          <el-form-item label="Name">
+            <el-input v-model="role.name" placeholder="Role Name" />
+          </el-form-item>
+          <el-form-item label="Desc">
+            <el-input
+              v-model="role.description"
+              :autosize="{ minRows: 2, maxRows: 4}"
+              type="textarea"
+              placeholder="Role Description"
+            />
+          </el-form-item>
+          <el-form-item label="Menus">
+            <el-tree
+              :data="testData"
+              show-checkbox
+              :props="defaultProps"
+              @node-click="handleNodeClick"
+            />
+          </el-form-item>
+        </el-form>
+        <div style="text-align:right;">
+          <el-button type="danger" @click="dialogVisible=false">Cancel</el-button>
+          <el-button type="primary" @click="confirmRole">Confirm</el-button>
+        </div>
+      </el-dialog>
   </div>
-
 </template>
 
 <script>
@@ -122,15 +121,15 @@ const defaultRole = {
         tableData: [{
           role: 'admin',
           name: '王小虎',
-          address: '上海市普陀区金沙江路 1518 弄',
+          description: 'Super Administrator. Have access to view all pages.',
         }, {
           role: 'editor',
           name: '王小A',
-          address: '上海市普陀区金沙江路 1517 弄',
+          description: 'Normal Editor. Can see all pages except permission page',
         }, {
           role: 'normal user',
           name: '王小B',
-          address: '上海市普陀区金沙江路 1519 弄',
+          description: 'Just a visitor. Can only see the home page and the document page',
         }]
       }
     },
@@ -164,6 +163,7 @@ const defaultRole = {
 .permission {
   width: 100%;
   height: 100%;
+  border: 1px solid;
 }
 .btn {
   height: 40px;
