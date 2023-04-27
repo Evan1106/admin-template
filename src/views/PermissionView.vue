@@ -36,13 +36,13 @@
   </el-table>
 
   <el-dialog :visible.sync="dialogVisible" :title="dialogType==='edit'?'Edit Role':'New Role'">
-      <el-form :model="tableData" label-width="80px" label-position="left">
+      <el-form :model="role" label-width="80px" label-position="left">
         <el-form-item label="Name">
-          <el-input v-model="tableData.name" placeholder="Role Name" />
+          <el-input v-model="role.name" placeholder="Role Name" />
         </el-form-item>
         <el-form-item label="Desc">
           <el-input
-            v-model="tableData.address"
+            v-model="role.description"
             :autosize="{ minRows: 2, maxRows: 4}"
             type="textarea"
             placeholder="Role Description"
@@ -67,6 +67,12 @@
 </template>
 
 <script>
+const defaultRole = {
+  key: '',
+  name: '',
+  description: '',
+  routes: []
+}
   export default {
     data() {
       return {
@@ -112,17 +118,18 @@
           children: 'children',
           label: 'label'
         },
+        role: Object.assign({}, defaultRole),
         tableData: [{
           role: 'admin',
           name: '王小虎',
           address: '上海市普陀区金沙江路 1518 弄',
         }, {
           role: 'editor',
-          name: '王小虎',
+          name: '王小A',
           address: '上海市普陀区金沙江路 1517 弄',
         }, {
           role: 'normal user',
-          name: '王小虎',
+          name: '王小B',
           address: '上海市普陀区金沙江路 1519 弄',
         }]
       }
@@ -131,6 +138,9 @@
       handleEdit() {
         this.dialogVisible = true;
         console.log(this.dialogVisible)
+      },
+      handleDelete() {
+        console.log("delete")
       },
       handleNodeClick(data) {
         console.log(data);

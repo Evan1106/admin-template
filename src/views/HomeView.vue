@@ -1,9 +1,18 @@
 <template>
   <div class="layout">
     <header>
-      <img src="../assets/infibi-logo.svg" height="100%">
+      <img src="../assets/infibi_logo.png" height="100%">
       <div class="user" v-on:click="() => {}">
-        <img src="../assets/logo.png" height="100%">
+        <!-- <img src="../assets/logo.png" height="100%"> -->
+          <el-dropdown trigger="click">
+            <el-avatar icon="el-icon-user-solid"></el-avatar>
+            <el-dropdown-menu slot="dropdown">
+              <el-dropdown-item>Profile</el-dropdown-item>
+              <el-dropdown-item>Dashboard</el-dropdown-item>
+              <el-dropdown-item>Empty</el-dropdown-item>
+              <el-dropdown-item divided>Log Out</el-dropdown-item>
+            </el-dropdown-menu>
+          </el-dropdown>
       </div>
     </header>
     <div class="page">
@@ -135,8 +144,8 @@ header {
 .user{
   position: absolute;
   height: inherit;
-  right: 0;
-  top: 0;
+  right: 5px;
+  top: 10px;
 
 }
 </style>
