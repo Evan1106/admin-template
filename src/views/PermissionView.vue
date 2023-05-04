@@ -2,7 +2,7 @@
 <template>
   <div class="permission">
     <br>
-    <el-button class="btn" type="primary">New Role</el-button>
+    <el-button class="btn" type="primary" @click="handleAddRole">New Role</el-button>
     <br><br>
     <el-table
       :data="tableData"
@@ -76,7 +76,7 @@ const defaultRole = {
     data() {
       return {
         dialogVisible: false,
-        dialogType: 'edit',
+        dialogType: 'new',
         testData:[
         {
           label: '首頁',
@@ -122,21 +122,30 @@ const defaultRole = {
           role: 'admin',
           name: '王小虎',
           description: 'Super Administrator. Have access to view all pages.',
+          routes:[],
         }, {
           role: 'editor',
           name: '王小A',
           description: 'Normal Editor. Can see all pages except permission page',
+          routes:[],
         }, {
           role: 'normal user',
           name: '王小B',
           description: 'Just a visitor. Can only see the home page and the document page',
+          routes:[],
         }]
       }
     },
     methods: {
-      handleEdit() {
+      handleEdit(scope) {
+        console.log(scope)
+        this.dialogType = 'edit'
         this.dialogVisible = true;
         console.log(this.dialogVisible)
+      },
+      handleAddRole() {
+        this.dialogType = 'new'
+        this.dialogVisible = true;
       },
       handleDelete() {
         console.log("delete")

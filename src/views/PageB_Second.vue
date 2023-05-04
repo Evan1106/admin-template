@@ -1,30 +1,37 @@
 <template>
   <div class="table">
+    <div class="filter-container">
+        <el-input v-model="searchFilter" placeholder="Search" style="width: 200px;" class="filter-item" @keyup.enter.native="handleFilter" />
+        <el-button class="filter-item" style="margin-left: 10px;" type="primary" icon="el-icon-edit" @click="handleCreate">
+          Add
+        </el-button>
+    </div>
+
     <el-table
     class="customer-table"
-    :data="tableData">
+    :data="this.allFilteredresults()">
     <el-table-column type="expand">
       <template slot-scope="props">
         <el-form label-position="left" inline class="demo-table-expand">
-          <el-form-item label="商品名称">
+          <el-form-item label="客戶名稱" class="form-item">
             <span>{{ props.row.company_name }}</span>
           </el-form-item>
-          <el-form-item label="所属店铺">
+          <el-form-item label="所属店铺" class="form-item">
             <span>{{ props.row.shop }}</span>
           </el-form-item>
-          <el-form-item label="商品 ID">
+          <el-form-item label="商品 ID" class="form-item">
             <span>{{ props.row.id }}</span>
           </el-form-item>
-          <el-form-item label="店铺 ID">
+          <el-form-item label="店铺 ID" class="form-item">
             <span>{{ props.row.shopId }}</span>
           </el-form-item>
-          <el-form-item label="商品分类">
+          <el-form-item label="商品分类" class="form-item">
             <span>{{ props.row.category }}</span>
           </el-form-item>
-          <el-form-item label="店铺地址">
+          <el-form-item label="店铺地址" class="form-item">
             <span>{{ props.row.address }}</span>
           </el-form-item>
-          <el-form-item label="商品描述">
+          <el-form-item label="商品描述" class="form-item">
             <span>{{ props.row.desc }}</span>
           </el-form-item>
         </el-form>
@@ -69,36 +76,12 @@
   </div>
 </template>
 
-<style>
-  .demo-table-expand {
-    font-size: 0;
-  }
-  .demo-table-expand label {
-    width: 90px;
-    color: #99a9bf;
-  }
-  .demo-table-expand .el-form-item {
-    margin-right: 0;
-    margin-bottom: 0;
-    width: 50%;
-  }
-  .customer-table {
-    /* color: white; */
-    /* max-width: calc( 100% - 350px ); */
-    border: 1px solid;
-    height: 100%;
-    width: 100%;
-  }
-  .table {
-    width: 100%;
-  }
-</style>
-
 <script>
   export default {
     data() {
       return {
-        tableData:[]
+        tableData:[],
+        searchFilter: "",
       }
     },
     mounted() {
@@ -126,6 +109,54 @@
         console.log(res)
         this.tableData = res.data;
       },
+      handleFilter() {
+        console.log("123")
+      },
+      handleCreate() {
+        console.log("234")
+      },
+      allFilteredresults() {
+        let filteredList = [];
+        let allUrs = this.tableData;
+        let strBuf = null;
+        for(let i = 0; i < allUrs.length; i++) {
+          strBuf = JSON.stringify((allUrs[i]));
+          if(strBuf.includes(this.searchFilter)){
+            filteredList.push(allUrs[i]);
+          }
+        }
+        return filteredList;
+      }
     }
   }
 </script>
+
+<style scoped>
+.form-item {
+  padding-left: 20px;
+}
+.filter-item {
+  padding: 10px;
+}
+.demo-table-expand {
+    font-size: 0;
+  }
+  .demo-table-expand label {
+    width: 90px;
+    color: #99a9bf;
+  }
+  .demo-table-expand .el-form-item {
+    margin-right: 0;
+    margin-bottom: 0;
+    width: 50%;
+  }
+  .customer-table {
+    border: 1px solid;
+    width: 100%;
+  }
+  .table {
+    width: 100%;
+    height: calc( 100vh - 60px );
+    overflow-y: auto;
+  }
+</style>
