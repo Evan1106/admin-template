@@ -13,27 +13,28 @@
     <el-table-column type="expand">
       <template slot-scope="props">
         <el-form label-position="left" inline class="demo-table-expand">
-          <el-form-item label="客戶名稱" class="form-item">
+          <el-form-item label="客戶名稱：" class="form-item">
             <span>{{ props.row.company_name }}</span>
           </el-form-item>
-          <el-form-item label="所属店铺" class="form-item">
-            <span>{{ props.row.shop }}</span>
+          <el-form-item label="聯絡人：" class="form-item">
+            <span>{{ props.row.contacter }}</span>
           </el-form-item>
-          <el-form-item label="商品 ID" class="form-item">
-            <span>{{ props.row.id }}</span>
+          <el-form-item label="統一編號：" class="form-item">
+            <span>{{ props.row.GUI_number }}</span>
           </el-form-item>
-          <el-form-item label="店铺 ID" class="form-item">
-            <span>{{ props.row.shopId }}</span>
+          <el-form-item label="電話：" class="form-item">
+            <span>{{ props.row.phone }}</span>
           </el-form-item>
-          <el-form-item label="商品分类" class="form-item">
-            <span>{{ props.row.category }}</span>
+          <el-form-item label="狀態：" class="form-item">
+            <!-- <span>{{ props.row.status }}</span> -->
+            <el-tag :type="props.row.status | statusFilter">{{ props.row.status }}</el-tag>
           </el-form-item>
-          <el-form-item label="店铺地址" class="form-item">
-            <span>{{ props.row.address }}</span>
-          </el-form-item>
-          <el-form-item label="商品描述" class="form-item">
+          <el-form-item label="備註：" class="form-item">
             <span>{{ props.row.desc }}</span>
           </el-form-item>
+          <!-- <el-form-item label="商品描述" class="form-item">
+            <span>{{ props.row.desc }}</span>
+          </el-form-item> -->
         </el-form>
       </template>
     </el-table-column>
@@ -55,7 +56,11 @@
     </el-table-column>
     <el-table-column
       label="狀態"
-      prop="status">
+      prop="status"
+      >
+      <template slot-scope="scope">
+        <el-tag :type="scope.row.status | statusFilter">{{ scope.row.status }}</el-tag>
+      </template>
     </el-table-column>
     <el-table-column
       label="備註"
@@ -78,6 +83,17 @@
 
 <script>
   export default {
+    filters: {
+      statusFilter(status) {
+        const statusMap = {
+          急件: 'danger',
+          接洽中:'info',
+          待聯絡:'success'
+        }
+        return statusMap[status]
+      }
+    },
+
     data() {
       return {
         tableData:[],
@@ -126,7 +142,7 @@
           }
         }
         return filteredList;
-      }
+      },
     }
   }
 </script>
@@ -151,7 +167,7 @@
     width: 50%;
   }
   .customer-table {
-    border: 1px solid;
+    /* border: 1px solid; */
     width: 100%;
   }
   .table {

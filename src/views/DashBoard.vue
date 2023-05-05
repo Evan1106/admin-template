@@ -21,7 +21,7 @@
 <script>
 // import BackToTop from '../components/BackToTop.vue'
 // import vue2Dropzone from 'vue2-dropzone';
-import 'vue2-dropzone/dist/vue2Dropzone.min.css'
+// import 'vue2-dropzone/dist/vue2Dropzone.min.css'
 export default {
   name: "DashBoard",
   components: {

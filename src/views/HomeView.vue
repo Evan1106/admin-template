@@ -90,7 +90,7 @@ export default {
       console.log(key, keyPath);
     },
     presentForm() {
-      this.$router.push('/HomeView/second');
+      this.$router.push('/HomeView/CustomerTable');
     },
     presentPermission() {
       this.$router.push('/HomeView/permission');
@@ -112,7 +112,6 @@ export default {
 
 <style lang="scss" scoped>
 .layout {
-  position: fixed;
   width: 100vw;
 }
 .page {
@@ -121,7 +120,6 @@ export default {
   .title {
     width: 150px;
     height: 100%;
-    // background-color: #cf4346;
     p {
       font-size: 50px;
       color: #510a0a;

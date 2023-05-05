@@ -21,9 +21,9 @@ const routes = [
         component: () => import("@/views/DashBoard")
       },
       {
-        path: "/HomeView/second",
-        name: "Second",
-        component: () => import("@/views/PageB_Second")
+        path: "/HomeView/CustomerTable",
+        name: "CustomerTable",
+        component: () => import("@/views/CustomerTable")
       },
       {
         path: "/HomeView/permission",

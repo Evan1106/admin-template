@@ -171,7 +171,7 @@ const defaultRole = {
 <style scoped>
 .permission {
   width: 100%;
-  height: 100%;
+  height: calc( 100vh - 60px );
   border: 1px solid;
 }
 .btn {
