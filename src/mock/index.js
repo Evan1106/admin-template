@@ -25,6 +25,7 @@ Mock.mock('/api/goodslist', 'get', {
       phone: '@natural(100000000, 999999999)',
       GUI_number:'@natural(100000000, 999999999)',
       status: '@status()',
+      isCheck: false,
 
     }
   ]
