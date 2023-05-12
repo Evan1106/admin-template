@@ -73,13 +73,17 @@
           </el-menu-item>
           <el-menu-item index="4" v-on:click="presentPermission">
               <i class="el-icon-setting"></i>
-              <span slot="title">權限</span>
+              <span slot="title">權限設定</span>
           </el-menu-item>
-          <el-menu-item index="5">
+          <el-menu-item index="5" v-on:click="presentHumanRes">
               <i class="el-icon-setting"></i>
-              <span slot="title">卡片</span>
+              <span slot="title">人員管理</span>
           </el-menu-item>
-          <el-menu-item index="6">
+          <el-menu-item index="6" v-on:click="presentAccess">
+              <i class="el-icon-setting"></i>
+              <span slot="title">權限管理</span>
+          </el-menu-item>
+          <el-menu-item index="7">
               <i class="el-icon-user"></i>
               <span slot="title">登出</span>
           </el-menu-item>
@@ -131,6 +135,12 @@ export default {
     presentGridView() {
       this.$router.push('/HomeView/gridview')
     }, 
+    presentAccess() {
+      this.$router.push('/HomeView/access')
+    },
+    presentHumanRes() {
+      this.$router.push('/HomeView/humanResource')
+    },
     async getGoodList(){
       const { data: res } = await this.$http.get('/api/goodslist')
       this.fakeNotification = res.data;
@@ -141,7 +151,6 @@ export default {
       this.showNotice = !this.showNotice;
     },
     getBadgeNum() {
-      console.log("1")
       let numbers = 0;
       for(let i = 0; i< this.fakeNotification.length; i++){
         if(this.fakeNotification[i].isCheck == false){

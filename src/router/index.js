@@ -31,9 +31,14 @@ const routes = [
         component: () => import('@/views/PermissionView')
       },
       {
-        path: "/HomeView/gridview",
-        name: "Gridview",
-        component: () => import('@/views/GridView')
+        path: "/HomeView/humanResource",
+        name: "HumanResource",
+        component: () => import('@/views/HumanResource')
+      },
+      {
+        path: "/HomeView/access",
+        name: "AccessManagement",
+        component: () => import('@/views/AccessManagement')
       },
     ]
   }

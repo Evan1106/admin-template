@@ -64,7 +64,7 @@ div {
   border: 1px solid ;
 }
 p {
-  font-size: 50px;
+  font-size: 30px;
   font-weight: 600;
   text-align: center;
   width: 100%;

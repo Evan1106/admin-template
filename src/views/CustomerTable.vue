@@ -1,7 +1,7 @@
 <template>
   <div class="table">
     <div class="filter-container">
-        <el-input v-model="searchFilter" placeholder="Search" style="width: 200px;" class="filter-item" @keyup.enter.native="handleFilter" />
+        <el-input v-model="searchFilter" placeholder="Search" style="width: 200px;" class="filter-item"/>
         <el-button class="filter-item" style="margin-left: 10px;" type="primary" icon="el-icon-edit" @click="handleCreate">
           Add
         </el-button>
@@ -32,9 +32,9 @@
           <el-form-item label="備註：" class="form-item">
             <span>{{ props.row.desc }}</span>
           </el-form-item>
-          <!-- <el-form-item label="商品描述" class="form-item">
+          <el-form-item label="已啟用服務/到期日：" class="form-item">
             <span>{{ props.row.desc }}</span>
-          </el-form-item> -->
+          </el-form-item>
         </el-form>
       </template>
     </el-table-column>
@@ -62,10 +62,10 @@
         <el-tag :type="scope.row.status | statusFilter">{{ scope.row.status }}</el-tag>
       </template>
     </el-table-column>
-    <el-table-column
+    <!-- <el-table-column
       label="備註"
       prop="desc">
-    </el-table-column>
+    </el-table-column> -->
     <el-table-column label="操作">
       <template slot-scope="scope">
         <el-button
@@ -78,10 +78,55 @@
       </template>
     </el-table-column>
   </el-table>
+  <!-- 編輯資訊popout -->
+  <el-dialog :visible.sync="showDialog" :title="dialogType === 'edit'? '編輯資料' : '新增資料'">
+    <el-form :model="tmpEditData" label-width="80px" label-position="left">
+      <el-form-item label="統一編號">
+        <el-input v-model="tmpEditData.GUI_number"/>
+      </el-form-item>
+      <el-form-item label="公司名稱">
+        <el-input v-model="tmpEditData.company_name" />
+      </el-form-item>
+      <el-form-item label="聯絡人">
+        <el-input v-model="tmpEditData.contacter" />
+      </el-form-item>
+      <el-form-item label="聯絡電話">
+        <el-input v-model="tmpEditData.phone" />
+      </el-form-item>
+      <el-form-item label="狀態">
+        <el-select v-model="tmpEditData.status">
+          <el-option value="接洽中">接洽中</el-option>
+          <el-option value="急件">急件</el-option>
+          <el-option value="已完成">已完成</el-option>
+          <el-option value="待聯絡">待聯絡</el-option>
+        </el-select>
+      </el-form-item>
+      <el-form-item label="備註">
+        <el-input
+          v-model="tmpEditData.description"
+          :autosize="{ minRows: 2, maxRows: 4}"
+          type="textarea"
+        />
+      </el-form-item>
+    </el-form>
+    <div style="text-align:right;">
+      <el-button type="danger" @click="showDialog=false">Cancel</el-button>
+      <el-button type="primary" @click="dataSubmit">Confirm</el-button>
+    </div>
+  </el-dialog>
   </div>
 </template>
 
 <script>
+const defaultCustomerData = {
+  id: '',
+  company_name: '',
+  contacter: '',
+  phone: '',
+  GUI_number: '',
+  status: '',
+
+}
   export default {
     filters: {
       statusFilter(status) {
@@ -98,6 +143,10 @@
       return {
         tableData:[],
         searchFilter: "",
+        showDialog: false,
+        customerData: Object.assign({}, defaultCustomerData),
+        dialogType: 'edit',
+        tmpEditData: Object.assign({}, defaultCustomerData),
       }
     },
     mounted() {
@@ -116,6 +165,14 @@
     methods: {
       handleEdit(index, row) {
         console.log(index, row);
+        this.tmpEditData.GUI_number = row.GUI_number
+        this.tmpEditData.company_name = row.company_name
+        this.tmpEditData.contacter = row.contacter
+        this.tmpEditData.id = row.id
+        this.tmpEditData.phone = row.phone
+        this.tmpEditData.status = row.status
+        this.dialogType = "edit"
+        this.showDialog = true
       },
       handleDelete(index, row) {
         console.log(index, row);
@@ -125,11 +182,13 @@
         console.log(res)
         this.tableData = res.data;
       },
-      handleFilter() {
-        console.log("123")
-      },
       handleCreate() {
-        console.log("234")
+        this.tmpEditData = Object.assign({}, defaultCustomerData)
+        this.dialogType = "new"
+        this.showDialog = true
+      },
+      dataSubmit() {
+        console.log('123')
       },
       allFilteredresults() {
         let filteredList = [];

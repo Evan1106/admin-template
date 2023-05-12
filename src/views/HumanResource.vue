@@ -1,36 +1,68 @@
 
 <template>
-  <div class="permission">
+  <div class="Access">
     <br>
-    <el-button class="btn" type="primary" @click="handleAddRole">New Role</el-button>
+    <el-button class="btn" type="primary" @click="handleAddRole">New</el-button>
     <br><br>
     <el-table
       :data="tableData"
       border
-      style="width: 90%; margin-left: 50px;">
+      style="width: min-content; margin-left: 50px;">
+      <el-table-column
+        align="center"
+        prop=""
+        label="員工編號"
+        width="110">
+      </el-table-column>
       <el-table-column
         align="center"
         prop="role"
-        label="Role key"
+        label="名字"
+        >
+      </el-table-column>
+      <el-table-column
+        align="center"
+        prop=""
+        label="身分證字號"
+        width="100">
+      </el-table-column>
+      <el-table-column
+        align="center"
+        prop=""
+        label="生日"
+        width="100">
+      </el-table-column>
+      <el-table-column
+        align="center"
+        prop=""
+        label="到職日"
+        width="100">
+      </el-table-column>
+      <el-table-column
+        align="center"
+        prop=""
+        label="離職日"
+        width="100">
+      </el-table-column>
+      <el-table-column
+        align="center"
+        prop=""
+        label="狀態"
+        width="90">
+      </el-table-column>
+      <el-table-column
+        align="center"
+        prop=""
+        label="離職原因"
         width="180">
       </el-table-column>
       <el-table-column
         align="center"
-        prop="name"
-        label="Role name"
+        label="Operations"
         width="180">
-      </el-table-column>
-      <el-table-column
-        align="header-center"
-        prop="description"
-        label="Description">
-      </el-table-column>
-      <el-table-column
-        align="center"
-        label="Operations">
         <template slot-scope="scope">
-            <el-button type="primary" size="small" @click="handleEdit(scope)">Edit</el-button>
-            <el-button type="danger" size="small" @click="handleDelete(scope)">Delete</el-button>
+            <el-button type="primary" size="small" @click="handleEdit(scope)">編輯</el-button>
+            <!-- <el-button type="warning" size="small" @click="handleEdit(scope)">凍結</el-button> -->
           </template>
       </el-table-column>
     </el-table>
@@ -46,14 +78,6 @@
               :autosize="{ minRows: 2, maxRows: 4}"
               type="textarea"
               placeholder="Role Description"
-            />
-          </el-form-item>
-          <el-form-item label="Menus">
-            <el-tree
-              :data="testData"
-              show-checkbox
-              :props="defaultProps"
-              @node-click="handleNodeClick"
             />
           </el-form-item>
         </el-form>
@@ -77,61 +101,25 @@ const defaultRole = {
       return {
         dialogVisible: false,
         dialogType: 'new',
-        testData:[
-        {
-          label: '首頁',
-          children: [{
-            label: '二级 1-1',
-            children: [{
-              label: '三级 1-1-1'
-            }]
-          }]
-        }, {
-          label: '表格',
-          children: [{
-            label: '二级 2-1',
-            children: [{
-              label: '三级 2-1-1'
-            }]
-          }, {
-            label: '二级 2-2',
-            children: [{
-              label: '三级 2-2-1'
-            }]
-          }]
-        }, {
-          label: '權限',
-          children: [{
-            label: '二级 3-1',
-            children: [{
-              label: '三级 3-1-1'
-            }]
-          }, {
-            label: '二级 3-2',
-            children: [{
-              label: '三级 3-2-1'
-            }]
-          }]
-        }],
         defaultProps: {
           children: 'children',
           label: 'label'
         },
         role: Object.assign({}, defaultRole),
         tableData: [{
-          role: 'admin',
-          name: 'admin',
-          description: 'Super Administrator. Have access to view all pages.',
+          role: '小明',
+          name: 'www@test.com',
+          description: 'admin',
           routes:[],
         }, {
-          role: 'editor',
-          name: 'editor',
-          description: 'Normal Editor. Can see all pages except permission page',
+          role: '小天',
+          name: 'www@test2.com',
+          description: 'editor',
           routes:[],
         }, {
-          role: 'visitor',
-          name: 'visitor',
-          description: 'Just a visitor. Can only see the home page and the document page',
+          role: '大壯',
+          name: 'www@test3.com',
+          description: 'visitor',
           routes:[],
         }]
       }
@@ -169,7 +157,7 @@ const defaultRole = {
 </script>
 
 <style scoped>
-.permission {
+.Access {
   width: 100%;
   height: calc( 100vh - 60px );
   border: 1px solid;

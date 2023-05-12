@@ -3,7 +3,8 @@
     <el-form ref="loginForm" :model="loginForm" class="login-form" autocomplete="on" label-position="left">
 
       <div class="title-container">
-        <h3 class="title">Login Form</h3>
+        <!-- <h3 class="title">infibi Admin Platform</h3> -->
+        <img src="../assets/infibi_logo.png" height="100%">
       </div>
 
       <el-form-item prop="username">
@@ -71,7 +72,7 @@ export default {
     }
   },
   beforeCreate: function() {
-    document.getElementsByTagName("body")[0].setAttribute("style","background-color:#2d3a4b");
+    // document.getElementsByTagName("body")[0].setAttribute("style","background-color:#2d3a4b");
   },
   created() {
 
@@ -164,7 +165,7 @@ $dark_gray:#889aa4;
 $light_gray:#eee;
 
 .login-container {
-  min-height: 100%;
+  min-height: 100vh;
   width: 100%;
   background-color: $bg;
   overflow: hidden;
@@ -200,6 +201,9 @@ $light_gray:#eee;
 
   .title-container {
     position: relative;
+    padding-bottom: 10px;
+    justify-content: center;
+    display: flex;
 
     .title {
       font-size: 26px;
