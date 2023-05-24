@@ -3,27 +3,31 @@
     <header>
       <img src="../assets/infibi_logo.png" height="100%" style="padding-left: 20px;">
       <div class="user">
+        <!-- 通知圖示 -->
         <!-- <img src="../assets/logo.png" height="100%"> -->
-          <el-badge :value="this.getBadgeNum()" class="badge" :max="30" :hidden="false">
+          <!-- <el-badge :value="this.getBadgeNum()" class="badge" :max="30" :hidden="false"> -->
             <!-- <el-dropdown trigger="click"> -->
-              <el-avatar icon="el-icon-bell" @click.native="clickNotice"></el-avatar>
+              <!-- <el-avatar icon="el-icon-bell" @click.native="clickNotice"></el-avatar> -->
               <!-- <el-dropdown-menu slot="dropdown">
                 <el-dropdown-item>通知</el-dropdown-item>
                 <el-dropdown-item v-for="(notice, index) in fakeNotification" :key="index" @click.native="clickNotice(index)">{{ notice.company_name }}/{{ notice.id }}</el-dropdown-item>
               </el-dropdown-menu>
           </el-dropdown> -->
-          </el-badge>
+          <!-- </el-badge> -->
+
           <el-dropdown trigger="click">
             <el-avatar icon="el-icon-user-solid"></el-avatar>
             <el-dropdown-menu slot="dropdown">
               <el-dropdown-item>Profile</el-dropdown-item>
               <el-dropdown-item>Dashboard</el-dropdown-item>
-              <el-dropdown-item>Empty</el-dropdown-item>
+              <!-- <el-dropdown-item>Empty</el-dropdown-item> -->
               <el-dropdown-item divided @click.native="presentLogout">Log Out</el-dropdown-item>
             </el-dropdown-menu>
           </el-dropdown>
       </div>
-      <div class="notificationBlock"  v-show="showNotice">
+
+      <!-- 通知列表 -->
+      <!-- <div class="notificationBlock"  v-show="showNotice">
         <div class="notificationHead">
           <h3>通知<i class="el-icon-bell"></i></h3>
         </div>
@@ -32,11 +36,11 @@
             <div class="notificationContentTitle">
               <h3>{{ notice.company_name }}</h3>
             </div>
-            <!-- <div>{{ notice.id }}</div> -->
-            <span>2023-01-23 10:34</span>
+            <div>{{ notice.id }}</div>
+            <span>2023-01-23 10:34{{ notice.isCheck }}</span>
           </div>
         </div>
-      </div>
+      </div> -->
 
     </header>
     <div class="page">
@@ -49,44 +53,44 @@
           background-color="#545c64"
           text-color="#fff"
           active-text-color="#ffd04b">
-          <el-menu-item index="1" @click="() => { this.$router.push('DashBoard'); }">
+          <el-menu-item index="1" v-on:click="presentForm">
               <i class="el-icon-menu"></i>
-              <span slot="title">首頁</span>
+              <span slot="title">客戶管理</span>
           </el-menu-item>
           <el-submenu index="2" class="myItem">
               <template slot="title">
               <i class="el-icon-location"></i>
-              <span>导航一</span>
+              <span>權限相關</span>
               </template>
               <el-menu-item-group>
-              <template slot="title">分组一</template>
-              <el-menu-item class="myItem" index="1-1">选项1</el-menu-item>
-              <el-menu-item class="myItem" index="1-2">选项2</el-menu-item>
+              <template slot="title">權限相關</template>
+              <el-menu-item class="myItem" index="1-1" v-on:click="presentAccess">權限管理</el-menu-item>
+              <el-menu-item class="myItem" index="1-2" v-on:click="presentPermission">權限設定</el-menu-item>
               </el-menu-item-group>
-              <el-menu-item-group title="分组2">
+              <!-- <el-menu-item-group title="分组2">
               <el-menu-item class="myItem" index="1-3">选项3</el-menu-item>
-              </el-menu-item-group>
+              </el-menu-item-group> -->
           </el-submenu>
-          <el-menu-item index="3" v-on:click="presentForm">
+          <!-- <el-menu-item index="3" v-on:click="presentForm">
               <i class="el-icon-setting"></i>
-              <span slot="title">表格</span>
-          </el-menu-item>
-          <el-menu-item index="4" v-on:click="presentPermission">
+              <span slot="title">客戶管理</span>
+          </el-menu-item> -->
+          <!-- <el-menu-item index="4" v-on:click="presentPermission">
               <i class="el-icon-setting"></i>
               <span slot="title">權限設定</span>
-          </el-menu-item>
-          <el-menu-item index="5" v-on:click="presentHumanRes">
+          </el-menu-item> -->
+          <el-menu-item index="3" v-on:click="presentHumanRes">
               <i class="el-icon-setting"></i>
               <span slot="title">人員管理</span>
           </el-menu-item>
-          <el-menu-item index="6" v-on:click="presentAccess">
+          <!-- <el-menu-item index="6" v-on:click="presentAccess">
               <i class="el-icon-setting"></i>
               <span slot="title">權限管理</span>
-          </el-menu-item>
-          <el-menu-item index="7">
+          </el-menu-item> -->
+          <!-- <el-menu-item index="4">
               <i class="el-icon-user"></i>
               <span slot="title">登出</span>
-          </el-menu-item>
+          </el-menu-item> -->
           </el-menu>
       </div>
       <router-view />
@@ -161,13 +165,11 @@ export default {
     }, 
     async presentLogout() {
       axios.post('/logout').then(res => {
-        console.log(res)
         this.$store.commit("resetState");
         this.$router.replace('/');
       })
     },
     checkItem(notice) {
-      // console.log(notice)
       notice.isCheck = true;
     },
     // handleClickOutside(event) {

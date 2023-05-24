@@ -7,7 +7,7 @@ import { Random } from 'mockjs'
 Random.extend({
   // 自定义函数名: function 函数
   status: function() {
-    const arr = ['已完成', '急件', '接洽中', '待聯絡']
+    const arr = [ '結案', '急件', '接洽中', '待聯絡']
     return this.pick(arr)
   }
 })
@@ -26,15 +26,19 @@ Mock.mock('/api/goodslist', 'get', {
       GUI_number:'@natural(100000000, 999999999)',
       status: '@status()',
       isCheck: false,
+      email: '@email',
+      domain: '@domain',
+      date: '@date',
+      desc: '@csentence(5)',
 
     }
   ]
 })
 
 // edit data
-Mock.mock('/api/editgoods', 'post', function(GUI_number) {
+Mock.mock('/api/editgoods', 'post', function(option) {
   // 这里的 option 是请求相关的参数
-  console.log(GUI_number)
+  console.log(option)
   // 如果需要在返回的对象中再使用mock的语法，则需要再使用Mock.mock
   return Mock.mock({
     status: 200,
@@ -42,12 +46,19 @@ Mock.mock('/api/editgoods', 'post', function(GUI_number) {
   })
 })
 
+//delete data
+Mock.mock('/api/deletegoods', 'delete', function(option) {
+  // 这里的 option 是请求相关的参数
+  console.log(option)
+  
+})
+
 // 根据Id获取商品信息
 Mock.mock(/\/api\/getgoods/, 'get', function(option) {
   console.log(option)
   
   // 通过 正则 的 .exec() 函数，从字符串中提取需要的数据
-//   const res = /\/api\/getgoods/(\d+)/.exec(option.url)
+  //   const res = /\/api\/getgoods/(\d+)/.exec(option.url)
   
   // 也可以通过字符串的split方法获取id
   // const urlId = option.url.split('/')[3]
@@ -60,7 +71,7 @@ Mock.mock(/\/api\/getgoods/, 'get', function(option) {
       name: '@fruit()',
       price: 2,
       count: 199,
-      img: '@dataImage(78x78)'
+      img: '@dataImage(78x78)',
     },
     status: 200,
     message: '获取商品成功！'
@@ -74,8 +85,8 @@ Mock.mock('/login','post', (param)=>{
   console.log(param)
   let data;
   //模拟用户名和密码都是 admin
-  if(body.username=='admin'&&body.password=='admin'){
-      state=1;
+  if(body.username=='admin' && body.password=='admin'){
+      state = 1;
       data = Mock.mock({
           "token": "@guid()",//模拟token
           "name": "@cname",//随机生成中文名字
@@ -89,5 +100,5 @@ Mock.mock('/login','post', (param)=>{
 
 //退出
 Mock.mock('/logout','post', ()=>{
-  return {state:1}
+  return { state:0 }
 });

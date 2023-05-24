@@ -13,6 +13,9 @@
     <el-table-column type="expand">
       <template slot-scope="props">
         <el-form label-position="left" inline class="demo-table-expand">
+          <el-form-item label="編號：" class="form-item">
+            <span>{{ props.row.id }}</span>
+          </el-form-item>
           <el-form-item label="客戶名稱：" class="form-item">
             <span>{{ props.row.company_name }}</span>
           </el-form-item>
@@ -22,21 +25,31 @@
           <el-form-item label="統一編號：" class="form-item">
             <span>{{ props.row.GUI_number }}</span>
           </el-form-item>
-          <el-form-item label="電話：" class="form-item">
+          <el-form-item label="聯絡電話：" class="form-item">
             <span>{{ props.row.phone }}</span>
           </el-form-item>
           <el-form-item label="狀態：" class="form-item">
             <!-- <span>{{ props.row.status }}</span> -->
             <el-tag :type="props.row.status | statusFilter">{{ props.row.status }}</el-tag>
           </el-form-item>
-          <el-form-item label="備註：" class="form-item">
-            <span>{{ props.row.desc }}</span>
+          <el-form-item label="聯絡人mail：" class="form-item">
+            <span>{{ props.row.email }}</span>
           </el-form-item>
-          <el-form-item label="已啟用服務/到期日：" class="form-item">
+          <el-form-item label="公司網頁：" class="form-item">
+            <span>{{ props.row.domain }}</span>
+          </el-form-item>
+          <el-form-item label="建檔日期：" class="form-item">
+            <span>{{ props.row.date }}</span>
+          </el-form-item>
+          <el-form-item label="備註：" class="form-item">
             <span>{{ props.row.desc }}</span>
           </el-form-item>
         </el-form>
       </template>
+    </el-table-column>
+    <el-table-column
+      label="編號"
+      prop="id">
     </el-table-column>
     <el-table-column
       label="統一編號"
@@ -45,6 +58,10 @@
     <el-table-column
       label="客戶名稱"
       prop="company_name">
+    </el-table-column>
+    <el-table-column
+      label="負責人"
+      prop="contacter">
     </el-table-column>
     <el-table-column
       label="聯絡人"
@@ -133,7 +150,8 @@ const defaultCustomerData = {
         const statusMap = {
           急件: 'danger',
           接洽中:'info',
-          待聯絡:'success'
+          待聯絡:'warning',
+          結案: 'success'
         }
         return statusMap[status]
       }
@@ -163,7 +181,7 @@ const defaultCustomerData = {
       
     },
     methods: {
-      handleEdit(index, row) {
+      async handleEdit(index, row) {
         console.log(index, row);
         this.tmpEditData.GUI_number = row.GUI_number
         this.tmpEditData.company_name = row.company_name
@@ -174,9 +192,31 @@ const defaultCustomerData = {
         this.dialogType = "edit"
         this.showDialog = true
       },
-      handleDelete(index, row) {
-        console.log(index, row);
-      },
+      handleDelete( $index, row ) {
+      this.$confirm('Confirm to remove the role?', 'Warning', {
+        confirmButtonText: 'Confirm',
+        cancelButtonText: 'Cancel',
+        type: 'warning'
+      })
+        .then(async() => {
+          // console.log(row)
+          await this.deleteRole(row.id)
+          this.tableData.splice($index, 1)
+          this.$message({
+            type: 'success',
+            message: 'Delete successed!'
+          })
+        })
+        .catch(err => { console.error(err) })
+    },
+    async deleteRole(id) {
+       const {data: res} = await this.$http.delete(`/api/deletegoods`, id)
+       console.log(id)
+       console.log(res)
+    },
+
+
+
       async getGoodList() {
         const { data: res } = await this.$http.get('/api/goodslist')
         console.log(res)
@@ -187,8 +227,12 @@ const defaultCustomerData = {
         this.dialogType = "new"
         this.showDialog = true
       },
-      dataSubmit() {
-        console.log('123')
+      async dataSubmit() {
+        let tmpDatas = {'GUI_number': this.tmpEditData.GUI_number, 'company_name': this.tmpEditData.company_name}
+        const {data: res} = await this.$http.post('/api/editgoods',tmpDatas)
+        console.log(res)
+        
+        this.showDialog = false;
       },
       allFilteredresults() {
         let filteredList = [];
