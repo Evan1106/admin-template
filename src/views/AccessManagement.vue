@@ -10,13 +10,13 @@
       style="width: min-content; margin-left: 50px;">
       <el-table-column
         align="center"
-        prop="role"
+        prop="name"
         label="名字"
         width="180">
       </el-table-column>
       <el-table-column
         align="center"
-        prop="name"
+        prop="key"
         label="員工編號"
         width="180">
       </el-table-column>
@@ -32,8 +32,8 @@
         width="360">
         <template slot-scope="scope">
             <el-button type="primary" size="small" @click="handleEdit(scope)">編輯</el-button>
-            <el-button type="warning" size="small" @click="handleEdit(scope)">凍結</el-button>
-            <el-button type="danger" size="small" @click="handleEdit(scope)">刪除</el-button>
+            <el-button type="warning" size="small" @click="handleFreeze(scope)">凍結</el-button>
+            <el-button type="danger" size="small" @click="handleDelete(scope)">刪除</el-button>
           </template>
       </el-table-column>
     </el-table>
@@ -78,18 +78,18 @@ const defaultRole = {
         },
         role: Object.assign({}, defaultRole),
         tableData: [{
-          role: '小明',
-          name: '001',
+          name: '小明',
+          key: '001',
           description: 'admin',
           routes:[],
         }, {
-          role: '小天',
-          name: '002',
+          name: '小天',
+          key: '002',
           description: 'editor',
           routes:[],
         }, {
-          role: '大壯',
-          name: '003',
+          name: '大壯',
+          key: '003',
           description: 'visitor',
           routes:[],
         }]
@@ -106,8 +106,47 @@ const defaultRole = {
         this.dialogType = 'new'
         this.dialogVisible = true;
       },
-      handleDelete() {
-        console.log("delete")
+      handleFreeze() {
+        this.$confirm('此操作將凍結該帳戶, 是否繼續?', '提示', {
+          confirmButtonText: '確定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          this.$message({
+            type: 'success',
+            message: '凍結成功!'
+          });
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消凍結'
+          });          
+        });
+        console.log("freeze")
+      },
+      handleDelete(scope) {
+        this.$confirm('此操作將永久刪除該文件, 是否繼續?', '提示', {
+          confirmButtonText: '確定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+        let index;
+        for(let i =0; i< this.tableData.length; i++){
+          if(scope.row.key == this.tableData[i].key){
+            index = scope.$index;
+          }
+        }
+        this.tableData.splice(index,1)
+          this.$message({
+            type: 'success',
+            message: '删除成功!'
+          });
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消删除'
+          });          
+        });
       },
       handleNodeClick(data) {
         console.log(data);
