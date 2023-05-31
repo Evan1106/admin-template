@@ -10,19 +10,19 @@
       style="width: min-content; margin-left: 50px;">
       <el-table-column
         align="center"
-        prop="name"
-        label="名字"
-        width="180">
-      </el-table-column>
-      <el-table-column
-        align="center"
         prop="key"
         label="員工編號"
         width="180">
       </el-table-column>
       <el-table-column
         align="center"
-        prop="description"
+        prop="name"
+        label="名字"
+        width="180">
+      </el-table-column>
+      <el-table-column
+        align="center"
+        prop="permission"
         label="權限"
         width="180">
       </el-table-column>
@@ -43,12 +43,12 @@
           <el-form-item label="Name">
             <el-input v-model="role.name" placeholder="Role Name" />
           </el-form-item>
-          <el-form-item label="Desc">
+          <el-form-item label="permission">
             <el-input
-              v-model="role.description"
+              v-model="role.permission"
               :autosize="{ minRows: 2, maxRows: 4}"
               type="textarea"
-              placeholder="Role Description"
+              placeholder="Role permission"
             />
           </el-form-item>
         </el-form>
@@ -80,17 +80,17 @@ const defaultRole = {
         tableData: [{
           name: '小明',
           key: '001',
-          description: 'admin',
+          permission: 'admin',
           routes:[],
         }, {
           name: '小天',
           key: '002',
-          description: 'editor',
+          permission: 'editor',
           routes:[],
         }, {
           name: '大壯',
           key: '003',
-          description: 'visitor',
+          permission: 'visitor',
           routes:[],
         }]
       }
@@ -120,7 +120,7 @@ const defaultRole = {
           this.$message({
             type: 'info',
             message: '已取消凍結'
-          });          
+          });
         });
         console.log("freeze")
       },

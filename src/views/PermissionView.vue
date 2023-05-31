@@ -10,7 +10,7 @@
       style="width: 90%; margin-left: 50px;">
       <el-table-column
         align="center"
-        prop="role"
+        prop="key"
         label="Role key"
         width="180">
       </el-table-column>
@@ -37,23 +37,28 @@
 
     <el-dialog :visible.sync="dialogVisible" :title="dialogType==='edit'?'Edit Role':'New Role'">
         <el-form :model="role" label-width="80px" label-position="left">
+          <el-form-item label="Key">
+            <el-input v-model="role.key" placeholder="Role Key" :disabled="dialogType==='edit'?true:false" />
+          </el-form-item>
           <el-form-item label="Name">
             <el-input v-model="role.name" placeholder="Role Name" />
           </el-form-item>
           <el-form-item label="Desc">
             <el-input
               v-model="role.description"
-              :autosize="{ minRows: 2, maxRows: 4}"
+              :autosize="{ minRows: 2, maxRows: 4 }"
               type="textarea"
               placeholder="Role Description"
             />
           </el-form-item>
           <el-form-item label="Menus">
             <el-tree
-              :data="testData"
+              ref="tree"
+              :check-on-click-node="true"
+              node-key="path"
+              :data="role.routes"
               show-checkbox
               :props="defaultProps"
-              @node-click="handleNodeClick"
             />
           </el-form-item>
         </el-form>
@@ -66,7 +71,9 @@
 </template>
 
 <script>
+import path from 'path'
 const defaultRole = {
+  id:'',
   key: '',
   name: '',
   description: '',
@@ -77,93 +84,201 @@ const defaultRole = {
       return {
         dialogVisible: false,
         dialogType: 'new',
-        testData:[
-        {
-          label: '首頁',
-          children: [{
-            label: '二级 1-1',
-            children: [{
-              label: '三级 1-1-1'
-            }]
-          }]
-        }, {
-          label: '表格',
-          children: [{
-            label: '二级 2-1',
-            children: [{
-              label: '三级 2-1-1'
-            }]
-          }, {
-            label: '二级 2-2',
-            children: [{
-              label: '三级 2-2-1'
-            }]
-          }]
-        }, {
-          label: '權限',
-          children: [{
-            label: '二级 3-1',
-            children: [{
-              label: '三级 3-1-1'
-            }]
-          }, {
-            label: '二级 3-2',
-            children: [{
-              label: '三级 3-2-1'
-            }]
-          }]
-        }],
+        routes: [],
+        testData:
+        [
+          { title: '客戶管理', path:'/customerManagement' }, 
+          {
+            title: '權限相關',
+            children: [{ title: '權限管理', path:'/permissionManagement' }, { title: '權限設定', path: '/permissionSetting' }]
+          }, 
+          { title: '人員管理', path:'/humanResource' }
+        ],
         defaultProps: {
           children: 'children',
-          label: 'label'
+          label: 'title'
         },
         role: Object.assign({}, defaultRole),
+        rolesList:[],
         tableData: [{
-          role: 'admin',
+          id: 0,
+          key: 'admin',
           name: 'admin',
           description: 'Super Administrator. Have access to view all pages.',
-          routes:[],
+          routes:[
+          // { title: '客戶管理', path:'/customerManagement' }, 
+          // {
+          //   title: '權限相關',
+          //   children: [{ title: '權限管理', path:'/permissionManagement' }, { title: '權限設定', path: '/permissionSetting' }]
+          // }, 
+          // { title: '人員管理', path:'/humanResource' }
+          ],
         }, {
-          role: 'editor',
+          id: 1,
+          key: 'editor',
           name: 'editor',
           description: 'Normal Editor. Can see all pages except permission page',
-          routes:[],
+          routes:[
+          // { title: '客戶管理', path:'/customerManagement' }, 
+          // {
+          //   title: '權限相關',
+          //   children: [{ title: '權限管理', path:'/permissionManagement' }, { title: '權限設定', path: '/permissionSetting' }]
+          // }, 
+          // { title: '人員管理', path:'/humanResource' }
+          ],
         }, {
-          role: 'visitor',
+          id: 2,
+          key: 'visitor',
           name: 'visitor',
           description: 'Just a visitor. Can only see the home page and the document page',
-          routes:[],
+          routes:[
+          // { title: '客戶管理', path:'/customerManagement' }, 
+          // {
+          //   title: '權限相關',
+          //   children: [{ title: '權限管理', path:'/permissionManagement' }, { title: '權限設定', path: '/permissionSetting' }]
+          // }, 
+          // { title: '人員管理', path:'/humanResource' }
+          ],
         }]
       }
     },
+    computed: {
+      routesData() {
+        // console.log(this.routes)
+        return this.routes
+      }
+    },
+    created() {
+      // this.getRoutes()
+      // this.getRoles()
+    },
     methods: {
+      async getRoutes() {
+        const res = await this.$http.get('/vue-element-admin/routes')
+        this.serviceRoutes = res.data
+        // console.log(res.data)
+      },
+      async getRoles() {
+        const res = await this.$http.get('/vue-element-admin/roles')
+        this.rolesList = res.data
+      },
       handleEdit(scope) {
-        console.log(scope)
+        // console.log(scope)
+        // console.log(this.role)
         this.dialogType = 'edit'
         this.dialogVisible = true;
-        console.log(this.dialogVisible)
+        this.role.key = scope.row.key
+        this.role.id = scope.row.id
+        this.role.name = scope.row.name
+        this.role.description = scope.row.description
+        this.role.routes = [ 
+          { title: '客戶管理', path:'/customerManagement' }, 
+          {
+            title: '權限相關',
+            children: [{ title: '權限管理', path:'/permissionManagement' }, { title: '權限設定', path: '/permissionSetting' }]
+          }, 
+          { title: '人員管理', path:'/humanResource' }
+        ]
+        if(this.role.routes.length === 0 && this.tableData[scope.row.id].routes.length === 0){
+          this.role.routes = [...this.testData] //無數據則賦予初始數據
+        }else{
+          let tmp = this.tableData[scope.row.id].routes
+          this.$nextTick(() => {
+            this.$refs.tree.setCheckedNodes(tmp) //取出已勾選資料
+          })
+          
+        }
       },
       handleAddRole() {
         this.dialogType = 'new'
         this.dialogVisible = true;
+        this.role.key = ""
+        this.role.name = ""
+        this.role.id = ""
+        this.role.description = ""
+        this.role.routes = this.testData
       },
-      handleDelete() {
-        console.log("delete")
-      },
-      handleNodeClick(data) {
-        console.log(data);
-      },
-      confirmRole() {
-        this.$loadingself('loading...', {
-          icon: 'el-icon-loading',
-          success: (res) => {
-            console.log(res)
+      // handleNodeCheck(scope) {
+      //   console.log(scope)
+      // },
+      handleDelete(scope) {
+        this.$confirm('此操作將永久刪除, 是否繼續?', '提示', {
+          confirmButtonText: '確定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+        let index;
+        for(let i =0; i< this.tableData.length; i++){
+          if(scope.row.role == this.tableData[i].role){
+            index = scope.$index;
           }
+        }
+        this.tableData.splice(index,1) // 刪除對應欄位
+          this.$message({
+            type: 'success',
+            message: '删除成功!'
+          });
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消删除'
+          });          
+        });
+
+      },
+      async confirmRole() {
+        const isEdit = this.dialogType === 'edit' // if this.dialogType === edit 回傳true
+
+        const checkedKeys = this.$refs.tree.getCheckedNodes()
+        // console.log(checkedKeys)
+        // this.role.routes = this.generateTree((this.serviceRoutes), '/', checkedKeys)
+        this.role.routes = checkedKeys
+        if (isEdit) {
+          for (let index = 0; index < this.tableData.length; index++) {
+            if (this.tableData[index].key === this.role.key) {
+              this.tableData.splice(index, 1, Object.assign({}, this.role))
+              // console.log(this.tableData[index])
+              break
+            }
+          }
+        } else {
+          // this.role.id = 3 //流水號測試用，屆時以後端產生id流水號對照
+          this.tableData.push(this.role)
+        }
+
+        const { description, key, name } = this.role
+        this.dialogVisible = false
+        // console.log(this.role)
+
+        this.$notify({
+          title: 'Success',
+          dangerouslyUseHTMLString: true,
+          message: `
+              <div>Role Key: ${key}</div>
+              <div>Role Name: ${name}</div>
+              <div>Description: ${description}</div>
+            `,
+          type: 'success'
         })
-        setTimeout(() => {
-          this.$loadingself.hide()
-        }, 5000)
+        this.role = Object.assign({}, defaultRole)
       },  
+      generateTree(routes, basePath = '/', checkedKeys) {
+        const res = []
+
+        for (const route of routes) {
+          const routePath = path.resolve(basePath, route.path)
+
+          // recursive child routes
+          if (route.children) {
+            route.children = this.generateTree(route.children, routePath, checkedKeys)
+          }
+          
+          if (checkedKeys.includes(routePath) || (route.children && route.children.length >= 1)) {
+            res.push(route)
+          }
+        }
+        return res
+      },      
     }
   }
 </script>

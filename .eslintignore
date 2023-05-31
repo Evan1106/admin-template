@@ -1,3 +1,5 @@
 src/plugins
 node_modules
 src/views/Homeview.vue
+src/mock/role/index.js
+src/mock/index.js
