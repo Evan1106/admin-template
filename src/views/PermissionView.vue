@@ -105,40 +105,19 @@ const defaultRole = {
           key: 'admin',
           name: 'admin',
           description: 'Super Administrator. Have access to view all pages.',
-          routes:[
-          // { title: '客戶管理', path:'/customerManagement' }, 
-          // {
-          //   title: '權限相關',
-          //   children: [{ title: '權限管理', path:'/permissionManagement' }, { title: '權限設定', path: '/permissionSetting' }]
-          // }, 
-          // { title: '人員管理', path:'/humanResource' }
-          ],
+          routes:[],
         }, {
           id: 1,
           key: 'editor',
           name: 'editor',
           description: 'Normal Editor. Can see all pages except permission page',
-          routes:[
-          // { title: '客戶管理', path:'/customerManagement' }, 
-          // {
-          //   title: '權限相關',
-          //   children: [{ title: '權限管理', path:'/permissionManagement' }, { title: '權限設定', path: '/permissionSetting' }]
-          // }, 
-          // { title: '人員管理', path:'/humanResource' }
-          ],
+          routes:[],
         }, {
           id: 2,
           key: 'visitor',
           name: 'visitor',
           description: 'Just a visitor. Can only see the home page and the document page',
-          routes:[
-          // { title: '客戶管理', path:'/customerManagement' }, 
-          // {
-          //   title: '權限相關',
-          //   children: [{ title: '權限管理', path:'/permissionManagement' }, { title: '權限設定', path: '/permissionSetting' }]
-          // }, 
-          // { title: '人員管理', path:'/humanResource' }
-          ],
+          routes:[],
         }]
       }
     },
@@ -183,7 +162,7 @@ const defaultRole = {
           this.role.routes = [...this.testData] //無數據則賦予初始數據
         }else{
           let tmp = this.tableData[scope.row.id].routes
-          this.$nextTick(() => {
+          this.$nextTick(() => {  //避免dom還未加載完畢而報錯
             this.$refs.tree.setCheckedNodes(tmp) //取出已勾選資料
           })
           
@@ -242,7 +221,7 @@ const defaultRole = {
             }
           }
         } else {
-          // this.role.id = 3 //流水號測試用，屆時以後端產生id流水號對照
+          this.role.id = 3 //流水號測試用，屆時用後端產生id流水號對照
           this.tableData.push(this.role)
         }
 
