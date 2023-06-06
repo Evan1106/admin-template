@@ -128,8 +128,8 @@ const defaultRole = {
       }
     },
     created() {
-      // this.getRoutes()
-      // this.getRoles()
+      this.getRoutes()
+      this.getRoles()
     },
     methods: {
       async getRoutes() {
@@ -181,6 +181,7 @@ const defaultRole = {
       //   console.log(scope)
       // },
       handleDelete(scope) {
+        //彈出警告視窗
         this.$confirm('此操作將永久刪除, 是否繼續?', '提示', {
           confirmButtonText: '確定',
           cancelButtonText: '取消',
@@ -221,7 +222,7 @@ const defaultRole = {
             }
           }
         } else {
-          this.role.id = 3 //流水號測試用，屆時用後端產生id流水號對照
+          this.role.id = 3 //流水號測試用，屆時用後端產生id流水號對照。
           this.tableData.push(this.role)
         }
 
@@ -241,11 +242,17 @@ const defaultRole = {
         })
         this.role = Object.assign({}, defaultRole)
       },  
+      // 測試用，目前router數量少用不到。在router有children的時候使用
       generateTree(routes, basePath = '/', checkedKeys) {
         const res = []
+        // console.log(routes)
 
-        for (const route of routes) {
-          const routePath = path.resolve(basePath, route.path)
+        for (const route of Object.entries(routes)) {
+          console.log(route)
+          let routePath = "" 
+          if(typeof(route.path) == "string"){
+           routePath = path.resolve(basePath, route.path)
+          }
 
           // recursive child routes
           if (route.children) {
@@ -256,6 +263,7 @@ const defaultRole = {
             res.push(route)
           }
         }
+        // console.log(res)
         return res
       },      
     }

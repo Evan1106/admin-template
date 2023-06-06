@@ -1,7 +1,7 @@
 <template>
   <div class="layout">
     <header>
-      <img src="../assets/infibi_logo.png" height="100%" style="padding-left: 20px;">
+      <img src="../assets/infibi_logo.png" height="100%" style="padding-left: 30px; padding-top: 5px; padding-bottom: 5px;">
       <div class="user">
         <!-- 通知圖示 -->
         <!-- <img src="../assets/logo.png" height="100%"> -->
@@ -19,7 +19,8 @@
             <el-avatar icon="el-icon-user-solid"></el-avatar>
             <el-dropdown-menu slot="dropdown">
               <el-dropdown-item>Profile</el-dropdown-item>
-              <el-dropdown-item>Dashboard</el-dropdown-item>
+              <el-dropdown-item @click.native="onchangeLang('tw')" v-if="this.currentLanguage === 'English'">{{ $t('__traditional_chinese') }}</el-dropdown-item>
+              <el-dropdown-item @click.native="onchangeLang('en')" v-if="this.currentLanguage === '繁體中文'">{{ $t('__english') }}</el-dropdown-item>
               <!-- <el-dropdown-item>Empty</el-dropdown-item> -->
               <el-dropdown-item divided @click.native="presentLogout">Log Out</el-dropdown-item>
             </el-dropdown-menu>
@@ -55,17 +56,17 @@
           active-text-color="#ffd04b">
           <el-menu-item index="1" v-on:click="presentForm">
               <i class="el-icon-menu"></i>
-              <span slot="title">客戶管理</span>
+              <span slot="title">{{ $t('__customer_managment') }}</span>
           </el-menu-item>
           <el-submenu index="2" class="myItem">
               <template slot="title">
               <i class="el-icon-location"></i>
-              <span>權限相關</span>
+              <span>{{ $t('__about_access') }}</span>
               </template>
               <el-menu-item-group>
-              <template slot="title">權限相關</template>
-              <el-menu-item class="myItem" index="1-1" v-on:click="presentAccess">權限管理</el-menu-item>
-              <el-menu-item class="myItem" index="1-2" v-on:click="presentPermission">權限設定</el-menu-item>
+              <template slot="title">{{ $t('__about_access') }}</template>
+              <el-menu-item class="myItem" index="1-1" v-on:click="presentAccess">{{ $t('__permission_managment') }}</el-menu-item>
+              <el-menu-item class="myItem" index="1-2" v-on:click="presentPermission">{{ $t('__permission_setting') }}</el-menu-item>
               </el-menu-item-group>
               <!-- <el-menu-item-group title="分组2">
               <el-menu-item class="myItem" index="1-3">选项3</el-menu-item>
@@ -81,7 +82,7 @@
           </el-menu-item> -->
           <el-menu-item index="3" v-on:click="presentHumanRes">
               <i class="el-icon-setting"></i>
-              <span slot="title">人員管理</span>
+              <span slot="title">{{ $t('__HR_managment') }}</span>
           </el-menu-item>
           <!-- <el-menu-item index="6" v-on:click="presentAccess">
               <i class="el-icon-setting"></i>
@@ -100,6 +101,7 @@
 
 <script>
 import axios from 'axios';
+import i18n from '../store/i18n'
 
 export default {
   name: "HomeView",
@@ -113,6 +115,7 @@ export default {
     return {
       fakeNotification:[],
       showNotice: false,
+      currentLanguage: (i18n.locale === 'tw')?this.$t('__traditional_chinese'):this.$t('__english'),
     }
   },
   mounted() {
@@ -125,10 +128,10 @@ export default {
   },
   methods: {
     handleOpen(key, keyPath) {
-      console.log(key, keyPath);
+      // console.log(key, keyPath);
     },
     handleClose(key, keyPath) {
-      console.log(key, keyPath);
+      // console.log(key, keyPath);
     },
     presentForm() {
       this.$router.push('/HomeView/CustomerTable');
@@ -181,7 +184,7 @@ export default {
     getBroswer(){
       var sys = {};
       var ua = navigator.userAgent.toLowerCase();
-      // console.log(ua)
+      console.log(ua)
       var s;
       (s = ua.match(/edg\/([\d.]+)/)) ? sys.edg = s[1] :
       (s = ua.match(/rv:([\d.]+)\) like gecko/)) ? sys.ie = s[1] :
@@ -190,7 +193,7 @@ export default {
       (s = ua.match(/chrome\/([\d.]+)/)) ? sys.chrome = s[1] :
       (s = ua.match(/opera.([\d.]+)/)) ? sys.opera = s[1] :
       (s = ua.match(/version\/([\d.]+).*safari/)) ? sys.safari = s[1] : 0;
-      // console.log(sys)
+      console.log(s)
 
       if (sys.edg) return { broswer : "Edge", version : sys.edg };
       if (sys.ie) return { broswer : "IE", version : sys.ie };
@@ -206,8 +209,21 @@ export default {
       console.log(tmp)
       // alert("broswer:" + tmp.broswer +"_"+ "version:" + tmp.version )
     },
+    onchangeLang(lang) {
+      switchLang(lang);
+      this.currentLanguage = (i18n.locale === 'tw')?this.$t('__traditional_chinese'):this.$t('__english');
+                
+
+    }
   },
 };
+    /**
+     * @description 切換網站語系
+     */
+     const switchLang = (newLang) => {
+        i18n.locale = newLang
+        localStorage.setItem('locale', newLang)
+    }
 </script>
 
 <style lang="scss" scoped>
