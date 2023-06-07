@@ -2,7 +2,7 @@
 <template>
   <div class="Access">
     <br>
-    <el-button class="btn" type="primary" @click="handleAddRole">New</el-button>
+    <el-button class="btn" type="primary" @click="handleAddRole">{{ $t('__newData') }}</el-button>
     <br><br>
     <el-table
       :data="tableData"
@@ -11,79 +11,89 @@
       <el-table-column
         align="center"
         prop=""
-        label="員工編號"
+        :label="$t('__workers_id')"
         width="110">
       </el-table-column>
       <el-table-column
         align="center"
         prop="role"
-        label="名字"
+        :label="$t('__workers_name')"
         >
       </el-table-column>
       <el-table-column
         align="center"
         prop=""
-        label="身分證字號"
+        :label="$t('__identity_number')"
         width="100">
       </el-table-column>
       <el-table-column
         align="center"
         prop=""
-        label="生日"
+        :label="$t('__birthday')"
         width="100">
       </el-table-column>
       <el-table-column
         align="center"
         prop=""
-        label="到職日"
+        :label="$t('__onboard')"
         width="100">
       </el-table-column>
       <el-table-column
         align="center"
         prop=""
-        label="離職日"
+        :label="$t('__termination_date')"
         width="100">
       </el-table-column>
       <el-table-column
         align="center"
         prop=""
-        label="狀態"
+        :label="$t('__status')"
         width="90">
       </el-table-column>
       <el-table-column
         align="center"
         prop=""
-        label="離職原因"
+        :label="$t('__termination_reason')"
         width="180">
       </el-table-column>
       <el-table-column
         align="center"
-        label="Operations"
+        :label="$t('__operation')"
         width="180">
         <template slot-scope="scope">
-            <el-button type="primary" size="small" @click="handleEdit(scope)">編輯</el-button>
+            <el-button type="primary" size="small" @click="handleEdit(scope)">{{ $t('__edit') }}</el-button>
             <!-- <el-button type="warning" size="small" @click="handleEdit(scope)">凍結</el-button> -->
           </template>
       </el-table-column>
     </el-table>
 
-    <el-dialog :visible.sync="dialogVisible" :title="dialogType==='edit'?'Edit Role':'New Role'">
+    <el-dialog :visible.sync="dialogVisible" :title="dialogType==='edit'?$t('__edit') : $t('__newData')">
         <el-form :model="role" label-width="80px" label-position="left">
-          <el-form-item label="Name">
+          <el-form-item :label="$t('__workers_name')">
             <el-input v-model="role.name" placeholder="Role Name" />
           </el-form-item>
-          <el-form-item label="Desc">
-            <el-input
-              v-model="role.description"
-              :autosize="{ minRows: 2, maxRows: 4}"
-              type="textarea"
-              placeholder="Role Description"
-            />
+          <el-form-item :label="$t('__identity_number')">
+            <el-input v-model="role.name" placeholder="Role Name" />
+          </el-form-item>
+          <el-form-item :label="$t('__birthday')">
+            <el-input v-model="role.name" placeholder="Role Name" />
+          </el-form-item>
+          <el-form-item :label="$t('__onboard')">
+            <el-input v-model="role.name" placeholder="Role Name" />
+          </el-form-item>
+          <el-form-item :label="$t('__termination_date')">
+            <el-input v-model="role.name" placeholder="Role Name" />
+          </el-form-item>
+          <el-form-item :label="$t('__status')">
+            <el-input v-model="role.name" placeholder="Role Name" />
+          </el-form-item>
+          <el-form-item :label="$t('__termination_reason')">
+            <el-input v-model="role.name" placeholder="Role Name" />
           </el-form-item>
         </el-form>
         <div style="text-align:right;">
-          <el-button type="danger" @click="dialogVisible=false">Cancel</el-button>
-          <el-button type="primary" @click="confirmRole">Confirm</el-button>
+          <el-button type="danger" @click="dialogVisible=false">{{ $t('__cancel') }}</el-button>
+          <el-button type="primary" @click="confirmRole">{{ $t('__confirm') }}</el-button>
         </div>
       </el-dialog>
   </div>

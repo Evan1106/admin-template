@@ -2,7 +2,7 @@
 <template>
   <div class="permission">
     <br>
-    <el-button class="btn" type="primary" @click="handleAddRole">New Role</el-button>
+    <el-button class="btn" type="primary" @click="handleAddRole">{{ $t('__newData') }}</el-button>
     <br><br>
     <el-table
       :data="tableData"
@@ -11,39 +11,39 @@
       <el-table-column
         align="center"
         prop="key"
-        label="Role key"
+        :label="$t('__role_key')"
         width="180">
       </el-table-column>
       <el-table-column
         align="center"
         prop="name"
-        label="Role name"
+        :label="$t('__role_name')"
         width="180">
       </el-table-column>
       <el-table-column
         align="header-center"
         prop="description"
-        label="Description">
+        :label="$t('__description')">
       </el-table-column>
       <el-table-column
         align="center"
-        label="Operations">
+        :label="$t('__operation')">
         <template slot-scope="scope">
-            <el-button type="primary" size="small" @click="handleEdit(scope)">Edit</el-button>
-            <el-button type="danger" size="small" @click="handleDelete(scope)">Delete</el-button>
+            <el-button type="primary" size="small" @click="handleEdit(scope)">{{ $t('__edit') }}</el-button>
+            <el-button type="danger" size="small" @click="handleDelete(scope)">{{ $t('__delete') }}</el-button>
           </template>
       </el-table-column>
     </el-table>
 
-    <el-dialog :visible.sync="dialogVisible" :title="dialogType==='edit'?'Edit Role':'New Role'">
+    <el-dialog :visible.sync="dialogVisible" :title="dialogType==='edit'?$t('__edit') : $t('__newData')">
         <el-form :model="role" label-width="80px" label-position="left">
-          <el-form-item label="Key">
+          <el-form-item :label="$t('__role_key')">
             <el-input v-model="role.key" placeholder="Role Key" :disabled="dialogType==='edit'?true:false" />
           </el-form-item>
-          <el-form-item label="Name">
+          <el-form-item :label="$t('__role_name')">
             <el-input v-model="role.name" placeholder="Role Name" />
           </el-form-item>
-          <el-form-item label="Desc">
+          <el-form-item :label="$t('__description')">
             <el-input
               v-model="role.description"
               :autosize="{ minRows: 2, maxRows: 4 }"
@@ -63,8 +63,8 @@
           </el-form-item>
         </el-form>
         <div style="text-align:right;">
-          <el-button type="danger" @click="dialogVisible=false">Cancel</el-button>
-          <el-button type="primary" @click="confirmRole">Confirm</el-button>
+          <el-button type="danger" @click="dialogVisible=false">{{ $t('__cancel') }}</el-button>
+          <el-button type="primary" @click="confirmRole">{{ $t('__confirm') }}</el-button>
         </div>
       </el-dialog>
   </div>

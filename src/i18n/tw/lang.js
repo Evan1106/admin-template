@@ -16,5 +16,32 @@ export default {
     __phone: '聯絡電話',
     __status: '狀態',
     __operation: '操作',
-
+    __approach: '接洽中',
+    __urgent: '急件',
+    __done: '已完成',
+    __potential_customers: '待聯絡',
+    __memo: '備註',
+    __newData: '新增',
+    __webPage:'公司網頁',
+    __create_date:'建檔日期',
+    //權限管理
+    __workers_id: '員工編號',
+    __workers_name: '名字',
+    __workers_permission: '權限',
+    __active:'啟用',
+    //權限設定
+    __role_key: 'Role key',
+    __role_name: '權限名稱',
+    __description: '描述',
+    //人員管理
+    __identity_number: '身分證字號',
+    __birthday: '生日',
+    __onboard: '到職日',
+    __termination_date: '離職日',
+    __termination_reason: '離職原因',
+    //button
+    __edit: '編輯',
+    __delete: '刪除',
+    __confirm:'確認',
+    __cancel: '取消',
 }

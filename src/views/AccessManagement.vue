@@ -2,7 +2,7 @@
 <template>
   <div class="Access">
     <br>
-    <el-button class="btn" type="primary" @click="handleAddRole">New</el-button>
+    <el-button class="btn" type="primary" @click="handleAddRole">{{ $t('__newData') }}</el-button>
     <br><br>
     <el-table
       :data="tableData"
@@ -11,54 +11,54 @@
       <el-table-column
         align="center"
         prop="key"
-        label="員工編號"
+        :label="$t('__workers_id')"
         width="180">
       </el-table-column>
       <el-table-column
         align="center"
         prop="name"
-        label="名字"
+        :label="$t('__workers_name')"
         width="180">
       </el-table-column>
       <el-table-column
         align="center"
         prop="permission"
-        label="權限"
+        :label="$t('__workers_permission')"
         width="180">
       </el-table-column>
       <el-table-column
         align="center"
         prop="status"
-        label="狀態"
+        :label="$t('__status')"
         width="180">
       </el-table-column>
       <el-table-column
         align="center"
-        label="Operations"
+        :label="$t('__operation')"
         width="360">
         <template slot-scope="scope">
-            <el-button type="primary" size="small" @click="handleEdit(scope)">編輯</el-button>
+            <el-button type="primary" size="small" @click="handleEdit(scope)">{{ $t('__edit') }}</el-button>
             <!-- <el-button type="warning" size="small" @click="handleFreeze(scope)">凍結</el-button> -->
-            <el-button type="danger" size="small" @click="handleDelete(scope)">刪除</el-button>
+            <el-button type="danger" size="small" @click="handleDelete(scope)">{{ $t('__delete') }}</el-button>
           </template>
       </el-table-column>
     </el-table>
 
-    <el-dialog :visible.sync="dialogVisible" :title="dialogType==='edit'?'Edit worker':'New worker'">
+    <el-dialog :visible.sync="dialogVisible" :title="dialogType==='edit'?$t('__edit') : $t('__newData')">
         <el-form :model="worker" label-width="80px" label-position="left">
-          <el-form-item label="Name">
+          <el-form-item :label="$t('__workers_name')">
             <el-input v-model="worker.name" placeholder="Name" />
           </el-form-item>
-          <el-form-item label="Permission">
+          <el-form-item :label="$t('__workers_permission')">
             <el-input v-model="worker.permission" placeholder="Permission" />
           </el-form-item>
-          <el-form-item label="isActive?">
-            <el-checkbox v-model="worker.isActive">啟用</el-checkbox>
+          <el-form-item :label="$t('__active') + '?'">
+            <el-checkbox v-model="worker.isActive">{{ $t('__active') }}</el-checkbox>
           </el-form-item>
         </el-form>
         <div style="text-align:right;">
-          <el-button type="danger" @click="cancelSubmit">Cancel</el-button>
-          <el-button type="primary" @click="confirmRole">Confirm</el-button>
+          <el-button type="danger" @click="cancelSubmit">{{ $t('__cancel') }}</el-button>
+          <el-button type="primary" @click="confirmRole">{{ $t('__confirm') }}</el-button>
         </div>
       </el-dialog>
   </div>

@@ -3,7 +3,7 @@
     <div class="filter-container">
         <el-input v-model="searchFilter" placeholder="Search" style="width: 200px;" class="filter-item"/>
         <el-button class="filter-item" style="margin-left: 10px;" type="primary" icon="el-icon-edit" @click="handleCreate">
-          Add
+          {{ $t('__newData') }}
         </el-button>
     </div>
 
@@ -13,66 +13,66 @@
     <el-table-column type="expand">
       <template slot-scope="props">
         <el-form label-position="left" inline class="demo-table-expand">
-          <el-form-item label="編號：" class="form-item">
+          <el-form-item :label=" $t('__NO')+ '：'" class="form-item">
             <span>{{ props.row.id }}</span>
           </el-form-item>
-          <el-form-item label="客戶名稱：" class="form-item">
+          <el-form-item :label="$t('__customer_name')+ '：'" class="form-item">
             <span>{{ props.row.company_name }}</span>
           </el-form-item>
-          <el-form-item label="聯絡人：" class="form-item">
+          <el-form-item :label="$t('__contacter')+ '：'" class="form-item">
             <span>{{ props.row.contacter }}</span>
           </el-form-item>
-          <el-form-item label="統一編號：" class="form-item">
+          <el-form-item :label="$t('__GUI_number')+ '：'" class="form-item">
             <span>{{ props.row.GUI_number }}</span>
           </el-form-item>
-          <el-form-item label="聯絡電話：" class="form-item">
+          <el-form-item :label="$t('__phone')+ '：'" class="form-item">
             <span>{{ props.row.phone }}</span>
           </el-form-item>
-          <el-form-item label="狀態：" class="form-item">
+          <el-form-item :label="$t('__status')+ '：'" class="form-item">
             <!-- <span>{{ props.row.status }}</span> -->
             <el-tag :type="props.row.status | statusFilter">{{ props.row.status }}</el-tag>
           </el-form-item>
-          <el-form-item label="聯絡人mail：" class="form-item">
+          <el-form-item label="email：" class="form-item">
             <span>{{ props.row.email }}</span>
           </el-form-item>
-          <el-form-item label="公司網頁：" class="form-item">
+          <el-form-item :label="$t('__webPage')+ '：'" class="form-item">
             <span>{{ props.row.domain }}</span>
           </el-form-item>
-          <el-form-item label="建檔日期：" class="form-item">
+          <el-form-item :label="$t('__create_date')+ '：'" class="form-item">
             <span>{{ props.row.date }}</span>
           </el-form-item>
-          <el-form-item label="備註：" class="form-item">
+          <el-form-item :label="$t('__memo')+ '：'" class="form-item">
             <span>{{ props.row.desc }}</span>
           </el-form-item>
         </el-form>
       </template>
     </el-table-column>
     <el-table-column
-      label="編號"
+      :label=" $t('__NO') "
       prop="id">
     </el-table-column>
     <el-table-column
-      label="統一編號"
+      :label="$t('__GUI_number')"
       prop="GUI_number">
     </el-table-column>
     <el-table-column
-      label="客戶名稱"
+      :label="$t('__customer_name')"
       prop="company_name">
     </el-table-column>
     <el-table-column
-      label="負責人"
+      :label="$t('__boss')"
       prop="contacter">
     </el-table-column>
     <el-table-column
-      label="聯絡人"
+      :label="$t('__contacter')"
       prop="contacter">
     </el-table-column>
     <el-table-column
-      label="聯絡電話"
+      :label="$t('__phone')"
       prop="phone">
     </el-table-column>
     <el-table-column
-      label="狀態"
+      :label="$t('__status')"
       prop="status"
       >
       <template slot-scope="scope">
@@ -83,42 +83,42 @@
       label="備註"
       prop="desc">
     </el-table-column> -->
-    <el-table-column label="操作">
+    <el-table-column :label="$t('__operation')">
       <template slot-scope="scope">
         <el-button
           size="mini"
-          @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
+          @click="handleEdit(scope.$index, scope.row)">{{ $t('__edit') }}</el-button>
         <el-button
           size="mini"
           type="danger"
-          @click="handleDelete(scope.$index, scope.row)">删除</el-button>
+          @click="handleDelete(scope.$index, scope.row)">{{ $t('__delete') }}</el-button>
       </template>
     </el-table-column>
   </el-table>
   <!-- 編輯資訊popout -->
-  <el-dialog :visible.sync="showDialog" :title="dialogType === 'edit'? '編輯資料' : '新增資料'">
+  <el-dialog :visible.sync="showDialog" :title="dialogType === 'edit'? $t('__edit') : $t('__newData')">
     <el-form :model="tmpEditData" label-width="80px" label-position="left">
-      <el-form-item label="統一編號">
+      <el-form-item :label="$t('__GUI_number')">
         <el-input v-model="tmpEditData.GUI_number"/>
       </el-form-item>
-      <el-form-item label="公司名稱">
+      <el-form-item :label="$t('__customer_name')">
         <el-input v-model="tmpEditData.company_name" />
       </el-form-item>
-      <el-form-item label="聯絡人">
+      <el-form-item :label="$t('__contacter')">
         <el-input v-model="tmpEditData.contacter" />
       </el-form-item>
-      <el-form-item label="聯絡電話">
+      <el-form-item :label="$t('__phone')">
         <el-input v-model="tmpEditData.phone" />
       </el-form-item>
-      <el-form-item label="狀態">
+      <el-form-item :label="$t('__status')">
         <el-select v-model="tmpEditData.status">
-          <el-option value="接洽中">接洽中</el-option>
-          <el-option value="急件">急件</el-option>
-          <el-option value="已完成">已完成</el-option>
-          <el-option value="待聯絡">待聯絡</el-option>
+          <el-option :value="$t('__approach')">{{ $t('__approach') }}</el-option>
+          <el-option :value="$t('__urgent')">{{ $t('__urgent') }}</el-option>
+          <el-option :value=" $t('__done') ">{{ $t('__done') }}</el-option>
+          <el-option :value="$t('__potential_customers')">{{ $t('__potential_customers') }}</el-option>
         </el-select>
       </el-form-item>
-      <el-form-item label="備註">
+      <el-form-item :label="$t('__memo')">
         <el-input
           v-model="tmpEditData.description"
           :autosize="{ minRows: 2, maxRows: 4}"
@@ -127,8 +127,8 @@
       </el-form-item>
     </el-form>
     <div style="text-align:right;">
-      <el-button type="danger" @click="showDialog=false">Cancel</el-button>
-      <el-button type="primary" @click="dataSubmit">Confirm</el-button>
+      <el-button type="danger" @click="showDialog=false">{{ $t('__cancel') }}</el-button>
+      <el-button type="primary" @click="dataSubmit">{{ $t('__confirm') }}</el-button>
     </div>
   </el-dialog>
   </div>
