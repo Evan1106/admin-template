@@ -22,7 +22,7 @@
               <el-dropdown-item @click.native="onchangeLang('tw')" v-if="this.currentLanguage === 'English'">{{ $t('__traditional_chinese') }}</el-dropdown-item>
               <el-dropdown-item @click.native="onchangeLang('en')" v-if="this.currentLanguage === '繁體中文'">{{ $t('__english') }}</el-dropdown-item>
               <!-- <el-dropdown-item>Empty</el-dropdown-item> -->
-              <el-dropdown-item divided @click.native="presentLogout">Log Out</el-dropdown-item>
+              <el-dropdown-item divided @click.native="presentLogout">{{ $t('__logout') }}</el-dropdown-item>
             </el-dropdown-menu>
           </el-dropdown>
       </div>

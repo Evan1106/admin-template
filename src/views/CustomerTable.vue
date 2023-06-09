@@ -193,9 +193,9 @@ const defaultCustomerData = {
         this.showDialog = true
       },
       handleDelete( $index, row ) {
-      this.$confirm('Confirm to remove the role?', 'Warning', {
-        confirmButtonText: 'Confirm',
-        cancelButtonText: 'Cancel',
+      this.$confirm(this.$t('__this_will_delete_data_continue'), this.$t('__hint'), {
+        confirmButtonText: this.$t('__confirm'),
+        cancelButtonText: this.$t('__cancel'),
         type: 'warning'
       })
         .then(async() => {
@@ -204,7 +204,7 @@ const defaultCustomerData = {
           this.tableData.splice($index, 1)
           this.$message({
             type: 'success',
-            message: 'Delete successed!'
+            message: this.$t('__successful')
           })
         })
         .catch(err => { console.error(err) })

@@ -29,6 +29,9 @@ export default {
     __workers_name: '名字',
     __workers_permission: '權限',
     __active:'啟用',
+    __this_will_close_account_continue: '此操作將凍結該帳戶, 是否繼續?',
+    __this_will_delete_data_continue: '此操作將永久刪除該文件, 是否繼續?',
+
     //權限設定
     __role_key: 'Role key',
     __role_name: '權限名稱',
@@ -39,9 +42,14 @@ export default {
     __onboard: '到職日',
     __termination_date: '離職日',
     __termination_reason: '離職原因',
+    
     //button
     __edit: '編輯',
     __delete: '刪除',
     __confirm:'確認',
     __cancel: '取消',
+    __hint: '提示',
+    __successful: '成功',
+    __logout:'登出',
+
 }

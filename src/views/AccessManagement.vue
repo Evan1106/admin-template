@@ -119,27 +119,26 @@ const defaultWorker = {
         this.dialogVisible = true;
       },
       handleFreeze() {
-        this.$confirm('此操作將凍結該帳戶, 是否繼續?', '提示', {
-          confirmButtonText: '確定',
-          cancelButtonText: '取消',
+        this.$confirm( this.$t('__this_will_close_account_continue'), this.$t('__hint'), {
+          confirmButtonText: this.$t('__confirm'),
+          cancelButtonText: this.$t('__cancel'),
           type: 'warning'
         }).then(() => {
           this.$message({
             type: 'success',
-            message: '凍結成功!'
+            message: this.$t('__successful')
           });
         }).catch(() => {
           this.$message({
             type: 'info',
-            message: '已取消凍結'
+            message: this.$t('__cancel')
           });
         });
-        console.log("freeze")
       },
       handleDelete(scope) {
-        this.$confirm('此操作將永久刪除該文件, 是否繼續?', '提示', {
-          confirmButtonText: '確定',
-          cancelButtonText: '取消',
+        this.$confirm( this.$t('__this_will_delete_data_continue'), this.$t('__hint'), {
+          confirmButtonText: this.$t('__confirm'),
+          cancelButtonText: this.$t('__cancel'),
           type: 'warning'
         }).then(() => {
         let index;
@@ -151,12 +150,12 @@ const defaultWorker = {
         this.tableData.splice(index,1)
           this.$message({
             type: 'success',
-            message: '删除成功!'
+            message: this.$t('__successful')
           });
         }).catch(() => {
           this.$message({
             type: 'info',
-            message: '已取消删除'
+            message: this.$t('__cancel')
           });          
         });
       },

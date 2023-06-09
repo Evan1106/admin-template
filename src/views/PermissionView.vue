@@ -182,9 +182,9 @@ const defaultRole = {
       // },
       handleDelete(scope) {
         //彈出警告視窗
-        this.$confirm('此操作將永久刪除, 是否繼續?', '提示', {
-          confirmButtonText: '確定',
-          cancelButtonText: '取消',
+        this.$confirm(this.$t('__this_will_delete_data_continue'), this.$t('__hint'), {
+          confirmButtonText: this.$t('__confirm'),
+          cancelButtonText: this.$t('__cancel'),
           type: 'warning'
         }).then(() => {
         let index;
@@ -196,12 +196,12 @@ const defaultRole = {
         this.tableData.splice(index,1) // 刪除對應欄位
           this.$message({
             type: 'success',
-            message: '删除成功!'
+            message: this.$t('__successful')
           });
         }).catch(() => {
           this.$message({
             type: 'info',
-            message: '已取消删除'
+            message: this.$t('__cancel')
           });          
         });
 

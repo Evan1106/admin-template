@@ -70,25 +70,25 @@
     <el-dialog :visible.sync="dialogVisible" :title="dialogType==='edit'?$t('__edit') : $t('__newData')">
         <el-form :model="role" label-width="80px" label-position="left">
           <el-form-item :label="$t('__workers_name')">
-            <el-input v-model="role.name" placeholder="Role Name" />
+            <el-input v-model="role.name" />
           </el-form-item>
           <el-form-item :label="$t('__identity_number')">
-            <el-input v-model="role.name" placeholder="Role Name" />
+            <el-input v-model="role.name" />
           </el-form-item>
           <el-form-item :label="$t('__birthday')">
-            <el-input v-model="role.name" placeholder="Role Name" />
+            <el-input v-model="role.name" />
           </el-form-item>
           <el-form-item :label="$t('__onboard')">
-            <el-input v-model="role.name" placeholder="Role Name" />
+            <el-input v-model="role.name" />
           </el-form-item>
           <el-form-item :label="$t('__termination_date')">
-            <el-input v-model="role.name" placeholder="Role Name" />
+            <el-input v-model="role.name" />
           </el-form-item>
           <el-form-item :label="$t('__status')">
-            <el-input v-model="role.name" placeholder="Role Name" />
+            <el-input v-model="role.name" />
           </el-form-item>
           <el-form-item :label="$t('__termination_reason')">
-            <el-input v-model="role.name" placeholder="Role Name" />
+            <el-input v-model="role.name" />
           </el-form-item>
         </el-form>
         <div style="text-align:right;">
